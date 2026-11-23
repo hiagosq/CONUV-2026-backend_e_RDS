@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salgadaria — Gestão de Salgados</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo__conteudo">
+      <div>
+        <h1>Salgadaria</h1>
+        <p>Cadastro, precificação e controle de estoque de salgados</p>
+      </div>
+      <span class="badge-api" id="statusApi">API: /salgados</span>
+    </div>
+  </header>
+
+  <main class="container layout-grid">
+    <section class="card">
+      <h2 id="tituloFormulario">Novo Salgado</h2>
+      <form id="formSalgado" class="formulario">
+        <input type="hidden" id="salgadoId" />
+
+        <div class="campo">
+          <label for="nome">Nome do salgado</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex.: Coxinha de frango com catupiry" required />
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecione...</option>
+            <option value="Frito">Frito</option>
+            <option value="Assado">Assado</option>
+            <option value="Mini">Mini</option>
+          </select>
+        </div>
+
+        <div class="linha-dupla">
+          <div class="campo">
+            <label for="custoUnitario">Custo unitário (R$)</label>
+            <input type="number" id="custoUnitario" name="custoUnitario" step="0.01" min="0" placeholder="0.00" required />
+          </div>
+
+          <div class="campo">
+            <label for="precoVenda">Preço de venda (R$)</label>
+            <input type="number" id="precoVenda" name="precoVenda" step="0.01" min="0" placeholder="0.00" required />
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="quantidadeEstoque">Quantidade em estoque (un.)</label>
+          <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" min="0" step="1" placeholder="0" required />
+        </div>
+
+        <div class="resumo-margem" id="resumoMargem">
+          Lucro unitário estimado: <strong>R$ 0,00</strong> (0,0%)
+        </div>
+
+        <div class="acoes-form">
+          <button type="submit" class="btn btn--primario" id="btnSalvar">Salvar salgado</button>
+          <button type="button" class="btn btn--secundario" id="btnCancelar">Cancelar edição</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="cabecalho-secao">
+        <h2>Salgados cadastrados</h2>
+        <input type="search" id="filtroBusca" class="input-busca" placeholder="Buscar por nome ou categoria..." />
+      </div>
+
+      <div id="mensagemFeedback" class="feedback" role="status" aria-live="polite"></div>
+
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Custo</th>
+              <th>Venda</th>
+              <th>Estoque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="corpoTabelaSalgados">
+            <tr>
+              <td colspan="6" class="tabela-vazia">Carregando salgados...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
