@@ -34,8 +34,8 @@ function limparFeedback() {
 }
 
 function atualizarResumoMargem() {
-  const custo = parseFloat(inputCusto.value) || 0;
-  const venda = parseFloat(inputPreco.value) || 0;
+  const custo = Number.parseFloat(inputCusto.value) || 0;
+  const venda = Number.parseFloat(inputPreco.value) || 0;
   const lucro = venda - custo;
   const percentual = venda > 0 ? (lucro / venda) * 100 : 0;
 
@@ -138,12 +138,25 @@ form.addEventListener("submit", async (evento) => {
   evento.preventDefault();
   limparFeedback();
 
+  const custoUnitario = Number.parseFloat(inputCusto.value);
+  const precoVenda = Number.parseFloat(inputPreco.value);
+  const quantidadeEstoque = Number.parseInt(inputEstoque.value, 10);
+
+  if (
+    Number.isNaN(custoUnitario) ||
+    Number.isNaN(precoVenda) ||
+    Number.isNaN(quantidadeEstoque)
+  ) {
+    mostrarFeedback("Preencha custo, preço de venda e estoque com números válidos.", "erro");
+    return;
+  }
+
   const payload = {
     nome: inputNome.value.trim(),
     categoria: inputCategoria.value,
-    custoUnitario: parseFloat(inputCusto.value),
-    precoVenda: parseFloat(inputPreco.value),
-    quantidadeEstoque: parseInt(inputEstoque.value, 10),
+    custoUnitario,
+    precoVenda,
+    quantidadeEstoque,
   };
 
   const id = inputId.value;
